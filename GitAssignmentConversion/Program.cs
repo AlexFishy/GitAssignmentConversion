@@ -11,9 +11,10 @@ namespace GitAssignmentConversion
         static void Main(string[] args)
         {
             /* Program that converts Kilograms <-> Pounds & Centimeter <-> Inches */
-
-            System.Console.WriteLine("This is a program that calculates conversions in terms of-\nWeight: Kilograms & Pounds\nLength: Centimeters & Inches\n\n" +
-                "Press any key to continue.\n");
+            //NR: /n is platform specific, use the build in newline to ensure it works on all platforms
+            System.Console.WriteLine($"This is a program that calculates conversions in terms of-{System.Environment.NewLine}Weight: Kilograms & Pounds{System.Environment.NewLine}Length: Centimeters & Inches");
+            Console.WriteLine($"Tempurature: Celsius & Fahrenheit");
+            Console.WriteLine($"{System.Environment.NewLine}Press any key to continue.{System.Environment.NewLine}");
             Console.ReadKey();
             Console.Clear();
             double Num;
@@ -23,58 +24,79 @@ namespace GitAssignmentConversion
             double Inches;
             double Conversion;
 
+            //could refactor above to just have Input and Conversion since all are doubles and not used at the same time
+            double Input;
+
             /* Request user input for which conversion they would prefer */
 
-            System.Console.WriteLine("Please enter the number associated with the conversion you would like to do.\n\nWeight:\n1.Kilograms to Pounds\n2.Pounds" +
-                " to Kilograms\n\n" +
-                "Length:\n3.Centimeters to Inches\n4.Inches to Centimeters\n");
+            System.Console.WriteLine($"Please enter the number associated with the conversion you would like to do.{System.Environment.NewLine}{System.Environment.NewLine}Weight:{System.Environment.NewLine}1.Kilograms to Pounds{System.Environment.NewLine}2.Pounds to Kilograms{System.Environment.NewLine}{System.Environment.NewLine}Length:{System.Environment.NewLine}3.Centimeters to Inches{System.Environment.NewLine}4.Inches to Centimeters{System.Environment.NewLine}");
+            Console.WriteLine("5. Celsius to Fahrenheit");
+            Console.WriteLine("6. Fahrenheit to Celsius");
+
 
             /* Get number */
 
             Num = Convert.ToDouble(Console.ReadLine());
             Console.Clear();
 
-            if (Num == 1)
-            {
-                /* Kilogram # * 2.205 = Pound # */
-                Console.WriteLine("Kilograms to Pounds\nPlease enter the number of Kilograms\n");
-                Kilograms = Convert.ToDouble(Console.ReadLine());
-                Console.Clear();
-                /* Perform conversion calculation */
-                Conversion = Kilograms * 2.205;
-                Console.WriteLine(Kilograms + " Kilograms converts to " + Conversion + " Pounds");
+			//switch statement better than chained if statements
+			switch (Num)
+			{
+                case 1: /* Kilogram # * 2.205 = Pound # */
+                    printPrompt("Kilograms", "Pounds");
+                    Kilograms = Convert.ToDouble(Console.ReadLine());
+                    Console.Clear();
+                    /* Perform conversion calculation */
+                    Conversion = Kilograms * 2.205;
+                    Console.WriteLine(Kilograms + " Kilograms converts to " + Conversion + " Pounds");
+                    break;
+                case 2: /* Pound # / 2.205 = Kilogram # */
+                    printPrompt("Pounds", "Kilograms");
+                    Pounds = Convert.ToDouble(Console.ReadLine());
+                    Console.Clear();
+                    /* Perform conversion calculation */
+                    Conversion = Pounds / 2.205;
+                    Console.WriteLine(Pounds + " Pounds converts to " + Conversion + " Kilograms");
+                    break;
+                case 3: /* Centimeter # / 2.54 = Inch # */
+                    printPrompt("Centimeters", "Inches");
+                    Centimeters = Convert.ToDouble(Console.ReadLine());
+                    Console.Clear();
+                    /* Perform conversion calculation */
+                    Conversion = Centimeters / 2.54;
+                    Console.WriteLine(Centimeters + " Centimeters converts to " + Conversion + " Inches");
+                    break;
+                case 4:
+                    printPrompt("Inches", "Centimeters");
+                    Inches = Convert.ToDouble(Console.ReadLine());
+                    Console.Clear();
+                    /* Perform conversion calculation */
+                    Conversion = Inches * 2.54;
+                    Console.WriteLine(Inches + " Inches converts to " + Conversion + " Centimeters");
+                    break;
+                case 5:
+                    printPrompt("Celcius", "Farenheit");
+                    Input = Convert.ToDouble(Console.ReadLine());
+                    Console.Clear();
+                    Console.WriteLine("{0:F2}° Celcius converts to {1:F2}° Farenheit", Input, ((Input * ((double)9 / (double)5)) + 32));
+                    break;
+                case 6:
+                    printPrompt("Farenheit", "Celcius");
+                    Input = Convert.ToDouble(Console.ReadLine());
+                    Console.Clear();
+                    Console.WriteLine("{0}° Farenheit converts to {1:F2}° Celcius", Input, ((Input - 32) * ((double)5 / (double)9)));
+                    break;
+                default:
+                    Console.WriteLine("You did not enter a valid option");
+                    break;
             }
-            if (Num == 2)
-            {
-                /* Pound # / 2.205 = Kilogram # */
-                Console.WriteLine("Pounds to Kilograms\nPlease enter the number of Pounds\n");
-                Pounds = Convert.ToDouble(Console.ReadLine());
-                Console.Clear();
-                /* Perform conversion calculation */
-                Conversion = Pounds / 2.205;
-                Console.WriteLine(Pounds + " Pounds converts to " + Conversion + " Kilograms");
-            }
-            if (Num == 3)
-            {
-                /* Centimeter # / 2.54 = Inch # */
-                Console.WriteLine("Centimeters to Inches\nPlease enter the number of Centimeters\n");
-                Centimeters = Convert.ToDouble(Console.ReadLine());
-                Console.Clear();
-                /* Perform conversion calculation */
-                Conversion = Centimeters / 2.54;
-                Console.WriteLine(Centimeters + " Centimeters converts to " + Conversion + " Inches");
-            }
-            if (Num == 4)
-            {
-                /* Inch # * 2.54 = Centimeter # */
-                Console.WriteLine("Inches to Centimeters\nPlease enter the number of Inches\n");
-                Inches = Convert.ToDouble(Console.ReadLine());
-                Console.Clear();
-                /* Perform conversion calculation */
-                Conversion = Inches * 2.54;
-                Console.WriteLine(Inches + " Inches converts to " + Conversion + " Centimeters");
-            }
-                Console.ReadLine();
+            Console.ReadLine();
+        }
+        private static void printPrompt(string from, string to)
+        {
+            Console.WriteLine($"{from} to {to}");
+            Console.WriteLine($"Please enter the number of {from}");
         }
     }
+
 }
