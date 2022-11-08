@@ -74,7 +74,9 @@ namespace GitAssignmentConversion
                 Conversion = Inches * 2.54;
                 Console.WriteLine(Inches + " Inches converts to " + Conversion + " Centimeters");
             }
-                Console.ReadLine();
+            
+            Console.WriteLine("Cool Beans.");
+            Console.ReadLine();
         }
     }
 }
